@@ -20,18 +20,6 @@ class AnalysisController extends Controller
         //     ->orderBy("created_at")
         //     ->paginate(50);
 
-        $subQuery = Order::betweenDate($startDate, $endDate)
-            ->where("status", true)
-            ->groupBy("id")
-            ->selectRaw("id, sum(subtotal) as totalPerPurchase, DATE_FORMAT(created_at, '%Y%m%d') as date");
-
-        $data = DB::table($subQuery)
-            ->groupBy("date")
-            ->selectRaw("date, sum(totalPerPurchase) as total")
-            ->get();
-
-        return Inertia::render("Analysis", [
-            "data" => $data,
-        ]);
+        return Inertia::render("Analysis");
     }
 }
